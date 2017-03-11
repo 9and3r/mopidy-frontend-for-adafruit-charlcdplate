@@ -15,7 +15,7 @@ logger = logging.getLogger(__name__)
 class Extension(ext.Extension):
 
     dist_name = 'Mopidy-Frontend-For-Adafruit-CharLCDPlate'
-    ext_name = 'frontend-for-adafruit-charlcdplate'
+    ext_name = 'frontend_for_adafruit_charlcdplate'
     version = __version__
 
     def get_default_config(self):
@@ -34,15 +34,8 @@ class Extension(ext.Extension):
         # in a single extension.
 
         # TODO: Edit or remove entirely
-        from .frontend import FoobarFrontend
-        registry.add('frontend', FoobarFrontend)
+        from .Frontend import FrontendAdafruitCharLCDPlate
+        registry.add('frontend', FrontendAdafruitCharLCDPlate)
 
-        # TODO: Edit or remove entirely
-        from .backend import FoobarBackend
-        registry.add('backend', FoobarBackend)
 
-        # TODO: Edit or remove entirely
-        registry.add('http:static', {
-            'name': self.ext_name,
-            'path': os.path.join(os.path.dirname(__file__), 'static'),
-        })
+

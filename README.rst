@@ -34,7 +34,7 @@ Configuration
 Before starting Mopidy, you must add configuration for
 Mopidy-Frontend-For-Adafruit-CharLCDPlate to your Mopidy configuration file::
 
-    [frontend-for-adafruit-charlcdplate]
+    [frontend_for_adafruit_charlcdplate]
     # TODO: Add example of extension config
 
 

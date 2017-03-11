@@ -13,7 +13,7 @@ def get_version(filename):
 
 setup(
     name='Mopidy-Frontend-For-Adafruit-CharLCDPlate',
-    version=get_version('mopidy_frontend-for-adafruit-charlcdplate/__init__.py'),
+    version=get_version('mopidy_frontend_for_adafruit_charlcdplate/__init__.py'),
     url='https://github.com/9and3r/mopidy-frontend-for-adafruit-charlcdplate',
     license='Apache License, Version 2.0',
     author='Ander Orbegozo',
@@ -30,7 +30,7 @@ setup(
     ],
     entry_points={
         'mopidy.ext': [
-            'frontend-for-adafruit-charlcdplate = mopidy_frontend-for-adafruit-charlcdplate:Extension',
+            'frontend_for_adafruit_charlcdplate = mopidy_frontend_for_adafruit_charlcdplate:Extension',
         ],
     },
     classifiers=[

@@ -1,6 +1,6 @@
 from __future__ import unicode_literals
 
-from mopidy_frontend-for-adafruit-charlcdplate import Extension, frontend as frontend_lib
+from mopidy_frontend_for_adafruit_charlcdplate import Extension, frontend as frontend_lib
 
 
 def test_get_default_config():
@@ -8,7 +8,7 @@ def test_get_default_config():
 
     config = ext.get_default_config()
 
-    assert '[frontend-for-adafruit-charlcdplate]' in config
+    assert '[frontend_for_adafruit_charlcdplate]' in config
     assert 'enabled = true' in config
 
 
