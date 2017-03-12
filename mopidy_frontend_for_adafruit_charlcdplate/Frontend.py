@@ -44,7 +44,7 @@ class FrontendAdafruitCharLCDPlate(pykka.ThreadingActor, core.CoreListener):
             print event
             self.main_screen.input_event(event)
 
-        if self.main_screen.check_and_update(self.display_object) or self.display_object.update():
+        if self.main_screen.check_and_update(self.display_object, True) or self.display_object.update():
             self.send_screen_update()
 
 

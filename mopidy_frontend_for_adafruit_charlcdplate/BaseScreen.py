@@ -1,3 +1,5 @@
+from InputManager import InputManager
+
 class BaseScreen:
 
     def __init__(self, core):
@@ -7,15 +9,15 @@ class BaseScreen:
         self.current_subscreen_index = -1
         self.subscreen_control = False
 
-    def check_and_update(self, display_object):
+    def check_and_update(self, display_object, full_control):
         if self.update:
-            self.update_display(display_object)
+            self.update_display(display_object, full_control)
             self.update = False
             return True
         else:
             return False
 
-    def update_display(self, display_object):
+    def update_display(self, display_object, full_control):
         pass
 
     def resume(self):
@@ -23,7 +25,13 @@ class BaseScreen:
 
     def input_event(self, event):
         if self.subscreen_control and self.current_subscreen_index > -1 and self.current_subscreen_index < len(self.subscreens):
-            return self.subscreens[self.current_subscreen_index].on_input_event(event)
+            if event.type == 'click' and event.key == InputManager.LEFT:
+                self.subscreen_control = False
+                self.subscreens[self.current_subscreen_index].resume()
+                self.resume()
+                return True
+            else:
+                return self.subscreens[self.current_subscreen_index].on_input_event(event)
         else:
             return self.on_input_event(event)
 

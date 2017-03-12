@@ -20,8 +20,8 @@ class MainScreen(BaseScreen):
         self.current_subscreen_index = 0
         self.playing = core.playback.get_state().get()
 
-    def check_and_update(self, display_object):
-        return self.subscreens[self.current_subscreen_index].check_and_update(display_object)
+    def check_and_update(self, display_object, full_screen):
+        return self.subscreens[self.current_subscreen_index].check_and_update(display_object, self.subscreen_control)
 
     def on_playback_state_changed(self, old_state, new_state):
         if new_state == core.PlaybackState.PLAYING:
@@ -29,16 +29,20 @@ class MainScreen(BaseScreen):
         else:
             self.playing = False
 
-    def update_display(self, display_object):
-        self.subscreens[self.current_subscreen_index].update_display(display_object)
+    def update_display(self, display_object, full_control):
+        self.subscreens[self.current_subscreen_index].update_display(display_object, self.subscreen_control)
 
     def on_input_event(self, event):
         if event.type == 'click':
             if event.key == InputManager.SELECT:
-                if self.playing:
-                    self.core.playback.pause()
+                if self.current_subscreen_index == len(self.subscreens) - 1:
+                    self.subscreen_control = True
+                    self.subscreens[self.current_subscreen_index].resume()
                 else:
-                    self.core.playback.play()
+                    if self.playing:
+                        self.core.playback.pause()
+                    else:
+                        self.core.playback.play()
                 return True
             elif event.key == InputManager.UP:
                 self.current_subscreen_index -= 1
@@ -66,7 +70,7 @@ class NowPlayingTrack(BaseScreen):
         self.track_name = "No track"
         self.tl_track = None
 
-    def update_display(self, display_object):
+    def update_display(self, display_object, full_control):
         if self.tl_track is not None:
             display_object.change_display_data(self.track_name, NowPlayingTrack.get_artist_string(self.tl_track.track))
         else:
@@ -181,13 +185,13 @@ class SeekScreen(BaseScreen):
         self.progress_bar.set_value(self.current_second)
         self.update = True
 
-    def update_display(self, display_object):
+    def update_display(self, display_object, full_control):
         if self.length is not None:
             display_object.change_display_data("  " + self.track_current_second_text + " / " + self.track_length_text, self.progress_bar.string)
         else:
             display_object.change_display_data("No duration", "")
 
-    def check_and_update(self, display_object):
+    def check_and_update(self, display_object, full_control):
         if self.length is not None:
             # Update values
             if not self.paused:
@@ -197,7 +201,7 @@ class SeekScreen(BaseScreen):
                 return self.update
 
         if self.update or self.progress_bar.update:
-            self.update_display(display_object)
+            self.update_display(display_object, full_control)
             return True
         else:
             return False
@@ -212,7 +216,7 @@ class VolumeScreen(BaseScreen):
         self.progress_bar.set_value(self.volume)
 
 
-    def update_display(self, display_object):
+    def update_display(self, display_object, full_control):
         display_object.change_display_data('Volume ' + str(self.volume), self.progress_bar.get_string())
 
     def on_input_event(self, event):
