@@ -5,7 +5,7 @@ from mopidy import core
 from MainScreen import MainScreen
 from InputManager import InputManager
 
-from web_socket_lcd_simulator import WebSockectLCDSimulator
+
 from DisplayObject import DisplayObject
 
 import pykka
@@ -22,9 +22,10 @@ class FrontendAdafruitCharLCDPlate(pykka.ThreadingActor, core.CoreListener):
             import Adafruit_CharLCD as LCD
             self.display = LCD.Adafruit_CharLCDPlate()
         else:
+            from web_socket_lcd_simulator import WebSockectLCDSimulator
             self.display = WebSockectLCDSimulator()
 
-            
+
         self.main_screen = MainScreen(core)
         self.running = True
 
