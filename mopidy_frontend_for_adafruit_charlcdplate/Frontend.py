@@ -45,6 +45,7 @@ class FrontendAdafruitCharLCDPlate(pykka.ThreadingActor, core.CoreListener):
             pass
 
     def send_screen_update(self):
+        self.display.clear()
         self.display.message(self.display_object.getString())
 
     def start_working(self):
