@@ -17,18 +17,31 @@ class FrontendAdafruitCharLCDPlate(pykka.ThreadingActor, core.CoreListener):
         super(FrontendAdafruitCharLCDPlate, self).__init__()
         self.input_manager = InputManager()
         self.display_object = DisplayObject()
-        self.display = WebSockectLCDSimulator()
+
+        if True:
+            import Adafruit_CharLCD as LCD
+            self.display = LCD.Adafruit_CharLCDPlate()
+        else:
+            self.display = WebSockectLCDSimulator()
+
+            
         self.main_screen = MainScreen(core)
         self.running = True
 
     def on_start(self):
-        self.display.on_start()
+        try:
+            self.display.on_start()
+        except AttributeError:
+            pass
         t = threading.Thread(target=self.start_working)
         t.start()
 
     def on_stop(self):
         self.running = False
-        self.display.on_stop()
+        try:
+            self.display.on_stop()
+        except AttributeError:
+            pass
 
     def send_screen_update(self):
         self.display.message(self.display_object.getString())
