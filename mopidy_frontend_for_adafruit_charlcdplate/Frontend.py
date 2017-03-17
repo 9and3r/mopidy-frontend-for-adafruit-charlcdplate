@@ -31,11 +31,12 @@ class FrontendAdafruitCharLCDPlate(pykka.ThreadingActor, core.CoreListener):
 
     def on_start(self):
         # Add newline
-        self.display.create_char(1, [16, 16, 16, 16, 16, 16, 0])
-        self.display.create_char(2, [24, 24, 24, 24, 24, 24, 0])
-        self.display.create_char(3, [28, 28, 28, 28, 28, 28, 0])
-        self.display.create_char(4, [30, 30, 30, 30, 30, 30, 0])
-        self.display.create_char(5, [31, 31, 31, 31, 31, 31, 0])
+        self.display.set_color(1.0, 0.0, 0.0)
+        self.display.create_char(0, [16, 16, 16, 16, 16, 16, 0, 0])
+        self.display.create_char(1, [24, 24, 24, 24, 24, 24, 0, 0])
+        self.display.create_char(2, [28, 28, 28, 28, 28, 28, 0, 0])
+        self.display.create_char(3, [30, 30, 30, 30, 30, 30, 0, 0])
+        self.display.create_char(4, [31, 31, 31, 31, 31, 31, 0, 0])
         try:
             self.display.on_start()
 
