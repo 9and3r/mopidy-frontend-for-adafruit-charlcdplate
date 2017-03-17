@@ -32,6 +32,14 @@ class FrontendAdafruitCharLCDPlate(pykka.ThreadingActor, core.CoreListener):
     def on_start(self):
         try:
             self.display.on_start()
+
+
+            # Add newline
+            self.display.create_char(1, [16, 16, 16, 16, 16, 16, 0])
+            self.display.create_char(2, [24, 24, 24, 24, 24, 24, 0])
+            self.display.create_char(3, [28, 28, 28, 28, 28, 28, 0])
+            self.display.create_char(4, [30, 30, 30, 30, 30, 30, 0])
+            self.display.create_char(5, [31, 31, 31, 31, 31, 31, 0])
         except AttributeError:
             pass
         t = threading.Thread(target=self.start_working)
